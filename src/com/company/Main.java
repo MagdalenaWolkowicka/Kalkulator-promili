@@ -15,39 +15,40 @@ public class Main {
         double time = scanner.nextDouble();
         System.out.println("Podaj masę ciała w kg");
         int bodyWeight = scanner.nextInt();
-        System.out.println("Podaj płeć. Mężczyzna - 1, Kobieta - 2");
-        int maleFemale = scanner.nextInt();
+        System.out.println("Podaj płeć. Mężczyzna - M, Kobieta - F");
+        String maleFemale = scanner.next();
 
-        if (maleFemale == 1) {
-            double amountOfAlcohol = (alcoholicStrenght * amountOfDrink) / 100;
+        switch (maleFemale) {
 
-            double alcoholLevel = (amountOfAlcohol / (bodyWeight * 0.7)) - time * 0.28;
-            double alcoholLevelRounded = Math.round(alcoholLevel * 100);
+            case "M":
+                double v = 0.7;
+                double v2 = 0.28;
+                String s = "Jesteś trzeźwy";
+                calculateAlcoholLevel(amountOfDrink, alcoholicStrenght, time, bodyWeight, v, v2, s);
+                break;
 
-            double numberOfHours = alcoholLevel / 0.28;
-            numberOfHours = Math.round(numberOfHours * 10);
-
-            if (alcoholLevelRounded / 100 > 0) {
-                System.out.println("W chwili zakończenia picia masz " + alcoholLevelRounded / 100 + " promila alkoholu we krwi");
-                System.out.println("Wytrzeźwiejesz po mniej więcej " + numberOfHours / 10 + " h");
-            } else
-                System.out.println("Jesteś trzeźwy ;)");
-
-        } else if (maleFemale == 2) {
-            double amountOfAlcohol = (alcoholicStrenght * amountOfDrink) / 100;
-
-            double alcoholLevel = (amountOfAlcohol / (bodyWeight * 0.6)) - time * 0.24;
-            double alcoholLevelRounded = Math.round(alcoholLevel * 100);
-
-            double numberOfHours = alcoholLevel / 0.24;
-            numberOfHours = Math.round(numberOfHours * 10);
-
-            if (alcoholLevelRounded / 100 > 0) {
-                System.out.println("W chwili zakończenia picia masz " + alcoholLevelRounded / 100 + " promila alkoholu we krwi");
-                System.out.println("Wytrzeźwiejesz po mniej więcej " + numberOfHours / 10 + " h");
-            } else {
-                System.out.println("Jesteś trzeźwa ;)");
-            }
+            case "F":
+                v = 0.6;
+                v2 = 0.24;
+                s = "Jesteś trzeźwa";
+                calculateAlcoholLevel(amountOfDrink, alcoholicStrenght, time, bodyWeight, v, v2, s);
+                break;
         }
+    }
+
+    private static void calculateAlcoholLevel(int amountOfDrink, double alcoholicStrenght, double time, int bodyWeight, double v, double v2, String s) {
+
+        double amountOfAlcohol = (alcoholicStrenght * amountOfDrink) / 100;
+        double alcoholLevel = (amountOfAlcohol / (bodyWeight * v)) - time * v2;
+        double alcoholLevelRounded = Math.round(alcoholLevel * 100);
+
+        double numberOfHours = alcoholLevel / v2;
+        numberOfHours = Math.round(numberOfHours * 10);
+
+        if (alcoholLevelRounded / 100 > 0) {
+            System.out.println("W chwili zakończenia picia masz " + alcoholLevelRounded / 100 + " promila alkoholu we krwi");
+            System.out.println("Wytrzeźwiejesz po mniej więcej " + numberOfHours / 10 + " h");
+        } else
+            System.out.println(s);
     }
 }
